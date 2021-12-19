@@ -1,1 +1,112 @@
-// TODO
+img.banner {
+  width: 100%;
+  max-height: 400px;
+
+  margin-bottom: 80px;
+
+  object-fit: cover;
+}
+
+.post {
+  margin-bottom: 80px;
+
+  h1 {
+    width: 100%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 58px;
+    /* identical to box height */
+
+    letter-spacing: -0.5px;
+
+    /* Heading */
+
+    color: var(--gray-50);
+  }
+
+  .info {
+    margin-top: 25px;
+    margin-bottom: 64px;
+
+    display: flex;
+    gap: 24px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .section {
+    & + .section {
+      margin-top: 60px;
+    }
+
+    h2 {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 3.125rem;
+      /* or 50px */
+
+      text-align: justify;
+
+      /* Heading */
+
+      color: var(--gray-50);
+    }
+
+    h2 {
+      margin-bottom: 60px;
+    }
+
+    .content {
+      p {
+        font-family: Inter;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.5rem;
+        /* or 50px */
+
+        text-align: justify;
+
+        color: var(--gray-50);
+      }
+
+      p + p {
+        margin-top: 20px;
+      }
+
+      ul {
+        margin-top: 20px;
+
+        list-style-position: inside;
+        margin-left: 30px;
+        li {
+          margin-bottom: 10px;
+
+          font-family: Inter;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 1.5rem;
+          /* or 50px */
+
+          color: var(--gray-50);
+        }
+      }
+
+      a {
+        color: var(--pink-100);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

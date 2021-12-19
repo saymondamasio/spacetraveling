@@ -1,1 +1,91 @@
-// TODO
+.posts {
+  margin-bottom: 64px;
+}
+
+.post {
+  & + .post {
+    margin-top: 48px;
+  }
+
+  h2 {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 34px;
+    /* identical to box height */
+
+    text-align: justify;
+    letter-spacing: -0.5px;
+
+    /* Heading */
+
+    color: var(--gray-50);
+  }
+
+  p {
+    margin-top: 8px;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+
+    text-align: justify;
+
+    /* Body */
+
+    color: var(--gray-100);
+  }
+
+  .info {
+    margin-top: 24px;
+
+    display: flex;
+    gap: 24px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    span {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+      /* identical to box height */
+
+      /* Info */
+
+      color: var(--gray-300);
+    }
+  }
+}
+
+button.fetchPosts {
+  border: 0;
+  background-color: transparent;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+
+  text-align: justify;
+
+  /* Highlight */
+
+  color: var(--pink-100);
+
+  &[disabled] {
+    cursor: not-allowed;
+    color: var(--gray-300);
+  }
+}
