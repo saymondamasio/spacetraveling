@@ -38,8 +38,8 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p style="color: red;">Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backendp>
-- 
+- <p style="color: red;">Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backend. </p>
+
 ## 🚀 Technologies
 
 Technologies that I used to develop this web client
