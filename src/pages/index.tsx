@@ -121,8 +121,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async ({
     }
   );
 
-  console.log(`posts${postsResponse}`);
-
   return {
     props: {
       postsPagination: postsResponse,

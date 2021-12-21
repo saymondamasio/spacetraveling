@@ -1,11 +1,11 @@
-import { Component } from 'react';
+import { Component, HtmlHTMLAttributes } from 'react';
 
-import styles from './comments.module.scss';
+type Props = HtmlHTMLAttributes<HTMLDivElement>;
 
-export default class Comments extends Component {
+export default class Comments extends Component<Props> {
   componentDidMount(): void {
     const script = document.createElement('script');
-    const anchor = document.getElementById('inject-comments-for-uterances');
+    const anchor = document.getElementById('inject-comments-for-utterances');
     script.setAttribute('src', 'https://utteranc.es/client.js');
     script.setAttribute('crossorigin', 'anonymous');
     script.setAttribute('async', String(true));
@@ -16,8 +16,6 @@ export default class Comments extends Component {
   }
 
   render(): JSX.Element {
-    return (
-      <div className={styles.comments} id="inject-comments-for-uterances" />
-    );
+    return <div id="inject-comments-for-utterances" {...this.props} />;
   }
 }

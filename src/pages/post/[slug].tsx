@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import Head from 'next/head';
 import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
@@ -32,12 +33,24 @@ interface Post {
   };
 }
 
+interface PostNeighbor {
+  title: string;
+  link: string;
+}
+
 interface PostProps {
   post: Post;
   preview: boolean;
+  nextPost?: PostNeighbor;
+  previousPost?: PostNeighbor;
 }
 
-export default function Post({ post, preview }: PostProps): JSX.Element {
+export default function Post({
+  post,
+  preview,
+  nextPost,
+  previousPost,
+}: PostProps): JSX.Element {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -52,11 +65,17 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
   const timeReadInMinutes = Math.ceil(wordsQuantity / 200);
 
   return (
-    <div>
-      <img className={styles.banner} src={post.data.banner.url} alt="Banner" />
+    <>
+      <Head>
+        <title>Post | spacetraveling</title>
+      </Head>
 
-      <div className={commonStyles.container}>
-        <div className={styles.post}>
+      <section className={styles.banner}>
+        <img src={post.data.banner.url} alt="Banner" />
+      </section>
+
+      <main className={`${commonStyles.container} ${styles.container}`}>
+        <article className={styles.post}>
           <h1>{post.data.title}</h1>
 
           <div className={styles.info}>
@@ -83,12 +102,11 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
             </div>
           </div>
 
-          <div>
+          <div className={styles.contentPost}>
             {post?.data?.content.map(item => (
-              <div key={item.heading} className={styles.section}>
+              <div key={item.heading} className={styles.sectionPost}>
                 <h2>{item.heading}</h2>
                 <div
-                  className={styles.content}
                   dangerouslySetInnerHTML={{
                     __html: RichText.asHtml(item.body),
                   }}
@@ -96,17 +114,43 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
               </div>
             ))}
           </div>
+        </article>
 
-          <Comments />
+        <hr />
 
-          {preview && (
-            <aside>
-              <PreviewButton />
-            </aside>
-          )}
-        </div>
-      </div>
-    </div>
+        <nav className={styles.navigationPosts}>
+          <div className={styles.previous}>
+            {previousPost && (
+              <Link href={previousPost.link}>
+                <a>
+                  <span>{previousPost.title}</span>
+                  <strong>Post anterior</strong>
+                </a>
+              </Link>
+            )}
+          </div>
+
+          <div className={styles.next}>
+            {nextPost && (
+              <Link href={nextPost.link}>
+                <a>
+                  <span>{nextPost.title}</span>
+                  <strong>Proximo Post</strong>
+                </a>
+              </Link>
+            )}
+          </div>
+        </nav>
+
+        <Comments className={styles.comments} />
+
+        {preview && (
+          <aside>
+            <PreviewButton />
+          </aside>
+        )}
+      </main>
+    </>
   );
 }
 
@@ -132,7 +176,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({
+export const getStaticProps: GetStaticProps<PostProps> = async ({
   params,
   preview = false,
   previewData,
@@ -144,9 +188,42 @@ export const getStaticProps: GetStaticProps = async ({
     ref: previewData?.ref ?? null,
   });
 
+  const nextPost = await prismic.queryFirst(
+    [Prismic.Predicates.at('document.type', 'posts')],
+    {
+      fetch: ['posts.title'],
+      orderings: '[document.first_publication_date]',
+      after: response.id,
+    }
+  );
+
+  const previousPost = await prismic.queryFirst(
+    [Prismic.Predicates.at('document.type', 'posts')],
+    {
+      fetch: ['posts.title'],
+      orderings: '[document.first_publication_date desc]',
+      after: response.id,
+    }
+  );
+
+  const nextPostLink = nextPost
+    ? {
+        title: nextPost.data.title,
+        link: `/post/${nextPost.uid}`,
+      }
+    : null;
+  const previousPostLink = previousPost
+    ? {
+        title: previousPost.data.title,
+        link: `/post/${previousPost.uid}`,
+      }
+    : null;
+
   return {
     props: {
       post: response,
+      nextPost: nextPostLink,
+      previousPost: previousPostLink,
       preview,
     },
     revalidate: 24 * 60 * 60, // 1 day
