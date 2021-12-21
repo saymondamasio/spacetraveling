@@ -38,11 +38,8 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p style="color: red;">Brief explanation about the project</p>
-
-To see the **api**, click here: [PROJECT_NAME Rest API](https://github/eliasgcf/readme-template)</br>
-To see the **mobile client**, click here: [PROJECT_NAME Mobile](https://github/eliasgcf/readme-template)
-
+- <p style="color: red;">Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backendp>
+- 
 ## 🚀 Technologies
 
 Technologies that I used to develop this web client
