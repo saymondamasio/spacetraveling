@@ -2,6 +2,12 @@
   margin-bottom: 64px;
 }
 
+.container {
+  aside {
+    margin-top: 100px;
+  }
+}
+
 .post {
   & + .post {
     margin-top: 48px;
@@ -21,6 +27,11 @@
     /* Heading */
 
     color: var(--gray-50);
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--pink-100);
+    }
   }
 
   p {

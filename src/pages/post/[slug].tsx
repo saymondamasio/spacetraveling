@@ -1,8 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { RichText } from 'prismic-dom';
-import { useEffect, useState } from 'react';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
+
+import Link from 'next/link';
 
 import Prismic from '@prismicio/client';
 import { format } from 'date-fns';
@@ -11,6 +12,8 @@ import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
+import Comments from '../../components/Comments';
+import { PreviewButton } from '../../components/PreviewButton';
 
 interface Post {
   first_publication_date: string | null;
@@ -31,9 +34,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -92,6 +96,14 @@ export default function Post({ post }: PostProps): JSX.Element {
               </div>
             ))}
           </div>
+
+          <Comments />
+
+          {preview && (
+            <aside>
+              <PreviewButton />
+            </aside>
+          )}
         </div>
       </div>
     </div>
@@ -106,28 +118,36 @@ export const getStaticPaths: GetStaticPaths = async () => {
     { pageSize: 3 }
   );
 
-  const paths = posts.results.map(result => {
-    return {
-      params: {
-        slug: result.uid,
-      },
-    };
-  });
+  const paths =
+    posts?.results.map(result => {
+      return {
+        params: {
+          slug: result.uid,
+        },
+      };
+    }) ?? [];
   return {
     paths,
     fallback: true,
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+  previewData,
+}) => {
   const { slug } = params;
 
   const prismic = getPrismicClient();
-  const response = await prismic.getByUID('posts', String(slug), {});
+  const response = await prismic.getByUID('posts', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
 
   return {
     props: {
       post: response,
+      preview,
     },
     revalidate: 24 * 60 * 60, // 1 day
   };

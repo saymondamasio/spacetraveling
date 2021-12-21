@@ -11,6 +11,7 @@ import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import { PreviewButton } from '../components/PreviewButton';
 
 interface Post {
   uid?: string;
@@ -29,22 +30,13 @@ interface PostPagination {
 
 interface HomeProps {
   postsPagination: PostPagination;
+  preview: boolean;
 }
 
-function refactorPosts(posts: Post[]): Post[] {
-  return posts.map(post => ({
-    ...post,
-    first_publication_date: format(
-      new Date(post.first_publication_date),
-      'dd LLL yyyy',
-      {
-        locale: ptBR,
-      }
-    ),
-  }));
-}
-
-export default function Home({ postsPagination }: HomeProps): JSX.Element {
+export default function Home({
+  postsPagination,
+  preview,
+}: HomeProps): JSX.Element {
   const [posts, setPosts] = useState<Post[]>(postsPagination.results);
   const [nextPage, setNextPage] = useState<string>(postsPagination.next_page);
   const [loading, setLoading] = useState(false);
@@ -56,14 +48,13 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
       .then(response => response.json())
       .then(newPosts => {
         setNextPage(newPosts.next_page);
-        const newPostsFormatted = refactorPosts(newPosts.results);
-        setPosts(oldPosts => [...oldPosts, ...newPostsFormatted]);
+        setPosts(oldPosts => [...oldPosts, ...newPosts.results]);
       })
       .finally(() => setLoading(false));
   }
 
   return (
-    <div className={commonStyles.container}>
+    <div className={`${commonStyles.container} ${styles.container}`}>
       <div className={styles.posts}>
         {posts.map(post => (
           <div className={styles.post} key={post.uid}>
@@ -106,23 +97,36 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           {loading ? 'Carregando...' : 'Carregar mais posts'}
         </button>
       )}
+
+      {preview && (
+        <aside>
+          <PreviewButton />
+        </aside>
+      )}
     </div>
   );
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async ({
+  preview = false,
+  previewData,
+}) => {
   const prismic = getPrismicClient();
   const postsResponse: PostPagination = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
     {
       fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
       pageSize: 1,
+      ref: previewData?.ref ?? null,
     }
   );
+
+  console.log(`posts${postsResponse}`);
 
   return {
     props: {
       postsPagination: postsResponse,
+      preview,
     },
   };
 };
