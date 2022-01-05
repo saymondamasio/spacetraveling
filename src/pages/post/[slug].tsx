@@ -68,7 +68,7 @@ export default function Post({
       </Head>
 
       <section className={styles.banner}>
-        {/* <Image src={post.data.banner.url} alt="Banner" /> */}
+        <img src={post.data.banner.url} alt="Banner" />
       </section>
 
       <main className={`${commonStyles.container} ${styles.container}`}>
