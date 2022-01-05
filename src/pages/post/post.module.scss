@@ -66,9 +66,6 @@
         /* Heading */
 
         color: var(--gray-50);
-      }
-
-      h2 {
         margin-bottom: 50px;
       }
 
@@ -113,6 +110,24 @@
           text-decoration: underline;
         }
       }
+
+      pre {
+        background-color: var(--gray-800);
+        border-radius: 5px;
+        margin: 20px 0;
+        padding: 20px;
+      }
+
+      div[data-oembed] {
+        margin: 25px 0;
+
+        height: 350px;
+
+        iframe {
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
   }
 }
@@ -125,10 +140,12 @@
   gap: 24px;
 
   .previous {
+    flex: 1;
     text-align: left;
   }
 
   .next {
+    flex: 1;
     text-align: right;
   }
 

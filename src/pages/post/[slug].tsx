@@ -1,48 +1,45 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
-import { RichText } from 'prismic-dom';
-import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
-
-import Link from 'next/link';
-
-import Prismic from '@prismicio/client';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import Head from 'next/head';
-import { getPrismicClient } from '../../services/prismic';
-
-import commonStyles from '../../styles/common.module.scss';
-import styles from './post.module.scss';
-import Comments from '../../components/Comments';
-import { PreviewButton } from '../../components/PreviewButton';
-
+import Prismic from '@prismicio/client'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { RichText } from 'prismic-dom'
+import { FiCalendar, FiClock, FiUser } from 'react-icons/fi'
+import Comments from '../../components/Comments'
+import { PreviewButton } from '../../components/PreviewButton'
+import { getPrismicClient } from '../../services/prismic'
+import commonStyles from '../../styles/common.module.scss'
+import styles from './post.module.scss'
 interface Post {
-  first_publication_date: string | null;
+  first_publication_date: string | null
   data: {
-    title: string;
+    title: string
     banner: {
-      url: string;
-    };
-    author: string;
+      url: string
+    }
+    author: string
     content: {
-      heading: string;
+      heading: string
       body: {
-        text: string;
-      }[];
-    }[];
-  };
+        type: string
+        text: string
+      }[]
+    }[]
+  }
 }
 
 interface PostNeighbor {
-  title: string;
-  link: string;
+  title: string
+  link: string
 }
 
 interface PostProps {
-  post: Post;
-  preview: boolean;
-  nextPost?: PostNeighbor;
-  previousPost?: PostNeighbor;
+  post: Post
+  preview: boolean
+  nextPost?: PostNeighbor
+  previousPost?: PostNeighbor
 }
 
 export default function Post({
@@ -51,18 +48,18 @@ export default function Post({
   nextPost,
   previousPost,
 }: PostProps): JSX.Element {
-  const router = useRouter();
+  const router = useRouter()
 
   if (router.isFallback) {
-    return <div>Carregando...</div>;
+    return <div>Carregando...</div>
   }
 
   const wordsQuantity = post.data.content.reduce((acc, section) => {
-    const words = RichText.asText(section.body).split(' ');
-    return acc + words.length;
-  }, 0);
+    const words = RichText.asText(section.body).split(' ')
+    return acc + words.length
+  }, 0)
 
-  const timeReadInMinutes = Math.ceil(wordsQuantity / 200);
+  const timeReadInMinutes = Math.ceil(wordsQuantity / 200)
 
   return (
     <>
@@ -71,7 +68,7 @@ export default function Post({
       </Head>
 
       <section className={styles.banner}>
-        <img src={post.data.banner.url} alt="Banner" />
+        {/* <Image src={post.data.banner.url} alt="Banner" /> */}
       </section>
 
       <main className={`${commonStyles.container} ${styles.container}`}>
@@ -103,9 +100,10 @@ export default function Post({
           </div>
 
           <div className={styles.contentPost}>
-            {post?.data?.content.map(item => (
+            {post?.data?.content.map((item, i) => (
               <div key={item.heading} className={styles.sectionPost}>
                 <h2>{item.heading}</h2>
+
                 <div
                   dangerouslySetInnerHTML={{
                     __html: RichText.asHtml(item.body),
@@ -151,16 +149,16 @@ export default function Post({
         )}
       </main>
     </>
-  );
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const prismic = getPrismicClient();
+  const prismic = getPrismicClient()
 
   const posts = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
     { pageSize: 3 }
-  );
+  )
 
   const paths =
     posts?.results.map(result => {
@@ -168,25 +166,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: {
           slug: result.uid,
         },
-      };
-    }) ?? [];
+      }
+    }) ?? []
   return {
     paths,
     fallback: true,
-  };
-};
+  }
+}
 
-export const getStaticProps: GetStaticProps<PostProps> = async ({
+export const getStaticProps: GetStaticProps<PostProps, any, any> = async ({
   params,
   preview = false,
   previewData,
 }) => {
-  const { slug } = params;
+  const { slug } = params
 
-  const prismic = getPrismicClient();
+  const prismic = getPrismicClient()
   const response = await prismic.getByUID('posts', String(slug), {
     ref: previewData?.ref ?? null,
-  });
+  })
 
   const nextPost = await prismic.queryFirst(
     [Prismic.Predicates.at('document.type', 'posts')],
@@ -195,7 +193,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
       orderings: '[document.first_publication_date]',
       after: response.id,
     }
-  );
+  )
 
   const previousPost = await prismic.queryFirst(
     [Prismic.Predicates.at('document.type', 'posts')],
@@ -204,20 +202,20 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
       orderings: '[document.first_publication_date desc]',
       after: response.id,
     }
-  );
+  )
 
   const nextPostLink = nextPost
     ? {
         title: nextPost.data.title,
         link: `/post/${nextPost.uid}`,
       }
-    : null;
+    : null
   const previousPostLink = previousPost
     ? {
         title: previousPost.data.title,
         link: `/post/${previousPost.uid}`,
       }
-    : null;
+    : null
 
   return {
     props: {
@@ -227,5 +225,5 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
       preview,
     },
     revalidate: 24 * 60 * 60, // 1 day
-  };
-};
+  }
+}
