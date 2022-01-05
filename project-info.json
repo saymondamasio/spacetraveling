@@ -1,7 +1,7 @@
 {
   "name": "Space Traveling",
-  "short_description": "",
-  "description": "",
+  "short_description": "Blog de notícias de tecnologia",
+  "description": "Um projeto de um blog de noticias de tecnologia, usando a arquitetura JAMStack, sem a necessidade de um backend próprio. Também foi usado o Prismic CMS para a gestão do conteúdo do posts.",
   "images": [
     "https://raw.githubusercontent.com/saymondamasio/spacetraveling/main/.github/screenshot-1.jpg",
     "https://raw.githubusercontent.com/saymondamasio/spacetraveling/main/.github/screenshot-2.jpg",

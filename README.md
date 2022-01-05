@@ -38,7 +38,7 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p>Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backend. </p>
+<p>Um projeto de um blog de noticias de tecnologia, usando a arquitetura JAMStack, sem a necessidade de um backend próprio. Também foi usado o Prismic CMS para a gestão do conteúdo do posts.</p>
 
 ## 🚀 Technologies
 
