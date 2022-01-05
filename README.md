@@ -6,26 +6,26 @@
   SpaceTraveling
 </h3>
 
-<p align="center">Best blog ever</p>
+<p align="center">Blog de notícias de tecnologia</p>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/saymondamasio/ignite-challenge-spacetraveling">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/saymondamasio/spacetraveling">
 
   <a href="https://www.linkedin.com/in/eliasgcf/">
     <img alt="Made by" src="https://img.shields.io/badge/Made%20by-Saymon%20Dam%C3%A1sio-brightgreen">
   </a>
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/saymondamasio/ignite-challenge-spacetraveling">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/saymondamasio/spacetraveling">
 
-  <a href="https://github.com/saymondamasio/ignite-challenge-spacetraveling/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/saymondamasio/ignite-challenge-spacetraveling">
+  <a href="https://github.com/saymondamasio/spacetraveling/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/saymondamasio/spacetraveling">
   </a>
 
-  <a href="https://github.com/saymondamasio/ignite-challenge-spacetraveling/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/saymondamasio/ignite-challenge-spacetraveling">
+  <a href="https://github.com/saymondamasio/spacetraveling/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/saymondamasio/spacetraveling">
   </a>
 
-  <img alt="GitHub" src="https://img.shields.io/github/license/saymondamasio/ignite-challenge-spacetraveling">
+  <img alt="GitHub" src="https://img.shields.io/github/license/saymondamasio/spacetraveling">
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p style="color: red;">Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backend. </p>
+- <p>Project created in Rocketseat's Ignite course, using the JAMStack concept, a frontend without the need for a backend. </p>
 
 ## 🚀 Technologies
 
@@ -50,7 +50,6 @@ Technologies that I used to develop this web client
 - [React Icons](https://react-icons.netlify.com/#/)
 - [SASS](https://sass-lang.com/)
 - [date-fns](https://date-fns.org/)
-
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [EditorConfig](https://editorconfig.org/)
@@ -60,7 +59,7 @@ Technologies that I used to develop this web client
 **Clone the project and access the folder**
 
 ```bash
-$ git clone https://github.com/saymon/ignite-challenge-spacetraveling.git && cd ignite-challenge-spacetraveling
+$ git clone https://github.com/saymon/spacetraveling.git && cd spacetraveling
 ```
 
 **Follow the steps below**
@@ -68,8 +67,6 @@ $ git clone https://github.com/saymon/ignite-challenge-spacetraveling.git && cd 
 ```bash
 # Install the dependencies
 $ yarn
-
-# Be sure the file 'src/services/api.ts' have the IP to your API
 
 # Start the client
 $ yarn dev
@@ -83,14 +80,14 @@ $ yarn dev
 # Fork using GitHub official command line
 # If you don't have the GitHub CLI, use the web site to do that.
 
-$ gh repo fork saymondamasio/ignite-challenge-spacetraveling
+$ gh repo fork saymondamasio/spacetraveling
 ```
 
 **Follow the steps below**
 
 ```bash
 # Clone your fork
-$ git clone your-fork-url && cd ignite-challenge-spacetraveling
+$ git clone your-fork-url && cd spacetraveling
 
 # Create a branch with your feature
 $ git checkout -b my-feature
