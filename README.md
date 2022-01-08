@@ -6,7 +6,7 @@
   SpaceTraveling
 </h3>
 
-<p align="center">Blog de notícias de tecnologia</p>
+<p align="center">Blog de notícias sobre tecnologia</p>
 
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/saymondamasio/spacetraveling">
