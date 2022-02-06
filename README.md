@@ -8,6 +8,8 @@
 
 <p align="center">Blog de notícias sobre tecnologia</p>
 
+https://user-images.githubusercontent.com/50559834/152695416-e30ab884-7fc7-4f3e-9cc7-da8263b6d534.mp4
+
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/saymondamasio/spacetraveling">
 
